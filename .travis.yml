@@ -6,4 +6,4 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - tox
+  - tox --skip-missing-interpreters
