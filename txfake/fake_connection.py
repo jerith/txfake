@@ -280,13 +280,7 @@ class HandlerResource(Resource):
         Resource.__init__(self)
         self.handler = handler
 
-    def render_GET(self, request):
-        return self.handler(request)
-
-    def render_POST(self, request):
-        return self.handler(request)
-
-    def render_PUT(self, request):
+    def render(self, request):
         return self.handler(request)
 
 

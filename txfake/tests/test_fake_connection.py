@@ -434,3 +434,35 @@ class TestFakeHttpServer(TestCase):
         self.assertEqual(request.method, "PUT")
         self.assertEqual(request.path, b"http://example.com/hello")
         yield self.assert_response(response, 200, b"hi")
+
+    @inlineCallbacks
+    def test_DELETE_request(self):
+        """
+        FakeHttpServer can handle a DELETE request.
+        """
+        requests = []
+        fake_http = FakeHttpServer(lambda req: requests.append(req) or b"hi")
+        agent = fake_http.get_agent()
+        self.assertTrue(IAgent.providedBy(agent))
+        response = yield agent.request("DELETE", b"http://example.com/hello")
+        # We got a valid request and returned a valid response.
+        [request] = requests
+        self.assertEqual(request.method, "DELETE")
+        self.assertEqual(request.path, b"http://example.com/hello")
+        yield self.assert_response(response, 200, b"hi")
+
+    @inlineCallbacks
+    def test_XMYSTERY_request(self):
+        """
+        FakeHttpServer can handle a request with an arbitrary verb.
+        """
+        requests = []
+        fake_http = FakeHttpServer(lambda req: requests.append(req) or b"hi")
+        agent = fake_http.get_agent()
+        self.assertTrue(IAgent.providedBy(agent))
+        response = yield agent.request("XMYSTERY", b"http://example.com/hello")
+        # We got a valid request and returned a valid response.
+        [request] = requests
+        self.assertEqual(request.method, "XMYSTERY")
+        self.assertEqual(request.path, b"http://example.com/hello")
+        yield self.assert_response(response, 200, b"hi")
