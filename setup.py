@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="txfake",
-    version="0.1.1",
+    version="0.1.2a0",
     url="https://github.com/jerith/txfake",
     license="MIT",
     description="TODO",
